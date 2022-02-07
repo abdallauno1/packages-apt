@@ -128,7 +128,7 @@ stages{
 					  sh 'rm -rf ~/chef-repo/cookbooks/packages-apt'
 				    } 
 				   sh 'rm -rf ~/chef-repo/cookbooks/packages-apt'
-				   sh 'mv $WORKSPACE/app-test ~/chef-repo/cookbooks/'
+				   sh 'mv $WORKSPACE/packages-apt ~/chef-repo/cookbooks/'
 				}
 		   	    }
 	            }
@@ -139,7 +139,7 @@ stages{
 			      sh '''
 				    set +x
 				    cd ~/chef-repo/cookbooks				  
-				    knife cookbook upload app-test 
+				    knife cookbook upload packages-apt 
 				    knife node run_list add test recipe[packages-apt::default]
 
 				 '''
