@@ -96,9 +96,9 @@ stages{
 	stage('removing directory'){
 		steps{
 		    script{
-		      def dirExists  = fileExists '$WORKSPACE/packages-apt/'
+		      def dirExists  = fileExists '$WORKSPACE/app-test/'
 			   if (dirExists){
-				 sh 'rm -rf $WORKSPACE/packages-apt/'	    
+				 sh 'rm -rf $WORKSPACE/app-test/'	    
 			   }
 	   	     }
 		 }		
@@ -107,14 +107,15 @@ stages{
 	 stage('Clone github repo & download Cookbook'){
 		steps{
 			script{
-				def repoCloned  = fileExists '$WORKSPACE/packages-apt/'
+				def repoCloned  = fileExists '$WORKSPACE/app-test'
 				    if (repoCloned){
-					  sh 'rm -rf $WORKSPACE/packages-apt/'
+					  sh 'rm -rf $WORKSPACE/app-test'
 				    }else{
 					 					 
 					 echo "$JOB_NAME"     
 				}
-				sh 'git clone https://github.com/abdallauno1/packages-apt.git' 
+				sh 'rm -rf $WORKSPACE/app-test'
+				sh 'git clone https://github.com/abdallauno1/app-test.git' 
 		   	  }
 		      }
 	  	}
@@ -122,12 +123,12 @@ stages{
 	 stage('Moving file to cookbooks dir'){
 		 steps{
 			 script{
-				def getRepo  = fileExists '~/chef-repo/cookbooks/packages-apt'
+				def getRepo  = fileExists '~/chef-repo/cookbooks/app-test'
 				    if (getRepo){
-					  sh 'rm -rf ~/chef-repo/cookbooks/packages-apt/'
+					  sh 'rm -rf ~/chef-repo/cookbooks/app-test'
 				    } 
-				  
-				   sh 'mv $WORKSPACE/packages-apt ~/chef-repo/cookbooks/'
+				   sh 'rm -rf ~/chef-repo/cookbooks/app-test'
+				   sh 'mv $WORKSPACE/app-test ~/chef-repo/cookbooks/'
 				}
 		   	    }
 	            }
@@ -138,8 +139,8 @@ stages{
 			      sh '''
 				    set +x
 				    cd ~/chef-repo/cookbooks				  
-				    knife cookbook upload packages-apt 
-				    knife node run_list add test recipe[packages-apt::default]
+				    knife cookbook upload app-test 
+				    knife node run_list add test recipe[app-test::default]
 
 				 '''
 		}
